@@ -23,7 +23,7 @@ I have share zip file with including database in DB folder for reference also we
 Drag and Drop code below:-
 
 1. HTML
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -37,7 +37,6 @@ Drag and Drop code below:-
   <div class="column" id="todo-column">
     <h2>To Do</h2>
     <div class="cards" id="todo-cards" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
-      <!-- Cards in the "To Do" column -->
       <div class="card" draggable="true" ondragstart="drag(event)" data-task-id="1">Task 1</div>
       <div class="card" draggable="true" ondragstart="drag(event)" data-task-id="2">Task 2</div>
     </div>
@@ -46,14 +45,12 @@ Drag and Drop code below:-
   <div class="column" id="in-progress-column">
     <h2>In Progress</h2>
     <div class="cards" id="in-progress-cards" ondrop="drop(event, 'in-progress')" ondragover="allowDrop(event)">
-      <!-- Cards in the "In Progress" column -->
     </div>
   </div>
 
   <div class="column" id="done-column">
     <h2>Done</h2>
     <div class="cards" id="done-cards" ondrop="drop(event, 'done')" ondragover="allowDrop(event)">
-      <!-- Cards in the "Done" column -->
     </div>
   </div>
 </div>
@@ -62,7 +59,7 @@ Drag and Drop code below:-
 <script src="script.js"></script>
 
 </body>
-</html>
+</html> -->
 
 ------------------------------------------------------------------------------------
 CSS:-

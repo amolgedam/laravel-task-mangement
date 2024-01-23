@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Drag and Drop</title>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .column {
+      flex: 1;
+      background-color: #fff;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .cards {
+      min-height: 100px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .card {
+      background-color: #eaeaea;
+      padding: 10px;
+      margin-bottom: 5px;
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="column" id="todo-column">
+    <h2>To Do</h2>
+    <div class="cards" id="todo-cards" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
+      <div class="card" draggable="true" ondragstart="drag(event)" data-task-id="1">Task 1</div>
+      <div class="card" draggable="true" ondragstart="drag(event)" data-task-id="2">Task 2</div>
+    </div>
+  </div>
+
+  <div class="column" id="in-progress-column">
+    <h2>In Progress</h2>
+    <div class="cards" id="in-progress-cards" ondrop="drop(event, 'in-progress')" ondragover="allowDrop(event)">
+    </div>
+  </div>
+
+  <div class="column" id="done-column">
+    <h2>Done</h2>
+    <div class="cards" id="done-cards" ondrop="drop(event, 'done')" ondragover="allowDrop(event)">
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script >
+  function allowDrop(event) {
+    event.preventDefault();
+  }
+
+  function drag(event) {
+    event.dataTransfer.setData('text/plain', event.target.dataset.taskId);
+  }
+
+  function drop(event, targetColumn) {
+    event.preventDefault();
+    const taskId = event.dataTransfer.getData('text/plain');
+    const card = document.querySelector(`[data-task-id="${taskId}"]`);
+
+    // Remove the card from its current column
+    card.parentNode.removeChild(card);
+
+    // Append the card to the target column
+    const targetColumnElement = document.getElementById(`${targetColumn}-cards`);
+    targetColumnElement.appendChild(card);
+
+    // Update the server-side record using AJAX
+    updateRecord(taskId, targetColumn);
+  }
+
+  function updateRecord(taskId, status) {
+    // Use AJAX to send the taskId and status to the server for updating the record
+    $.ajax({
+      type: 'POST',
+      url: 'update_record.php', // Update this with your server-side script
+      data: { taskId, status },
+      success: function(response) {
+        console.log('Record updated successfully');
+      },
+      error: function(error) {
+        console.error('Error updating record:', error);
+      }
+    });
+  }
+
+</script>
+</body>
+</html>
